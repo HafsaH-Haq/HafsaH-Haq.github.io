@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hafsah Haq — Web Developer & Data Analyst</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0a0a0f;
+      --bg2:       #111118;
+      --bg3:       #1a1a24;
+      --accent:    #7c5cfc;
+      --accent2:   #a78bfa;
+      --text:      #e8e8f0;
+      --muted:     #7a7a9a;
+      --border:    #1f1f2e;
+      --card:      #13131c;
+      --mono:      'Space Mono', monospace;
+      --sans:      'Space Grotesk', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 6vw;
+      background: rgba(10,10,15,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: var(--mono);
+      font-size: 1rem;
+      color: var(--accent2);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+    }
+
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    /* ── HERO ── */
+    #home {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 8rem 6vw 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .hero-label {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--accent);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 1.2rem;
+    }
+
+    .hero-name {
+      font-size: clamp(2.8rem, 5vw, 4.5rem);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+    }
+
+    .hero-name span {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: 1.1rem;
+      color: var(--muted);
+      margin-bottom: 2.5rem;
+      max-width: 480px;
+      line-height: 1.8;
+    }
+
+    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+    .btn {
+      display: inline-block;
+      padding: 0.75rem 1.8rem;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+      font-family: var(--sans);
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+    .btn-primary:hover { background: var(--accent2); transform: translateY(-2px); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent2); transform: translateY(-2px); }
+
+    /* hero stats */
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .stat {
+      background: var(--card);
+      padding: 1.8rem 1.2rem;
+      text-align: center;
+    }
+
+    .stat-num {
+      font-family: var(--mono);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--accent2);
+      display: block;
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+
+    .stat-label {
+      font-size: 0.78rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    /* glow blob */
+    .blob {
+      position: absolute;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(124,92,252,0.12) 0%, transparent 70%);
+      border-radius: 50%;
+      top: 10%; right: -100px;
+      pointer-events: none;
+    }
+
+    /* ── SECTIONS ── */
+    section { padding: 6rem 6vw; }
+
+    .section-inner { max-width: 1200px; margin: 0 auto; }
+
+    .section-label {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--accent);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+
+    .section-desc {
+      color: var(--muted);
+      max-width: 560px;
+      margin-bottom: 3.5rem;
+      font-size: 1rem;
+    }
+
+    /* ── ABOUT ── */
+    #about { background: var(--bg2); }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .about-text p { color: var(--muted); margin-bottom: 1.2rem; line-height: 1.85; }
+    .about-text p strong { color: var(--text); }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .skill-cat h4 {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--accent);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+
+    .tag {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.78rem;
+      padding: 0.3rem 0.7rem;
+      border-radius: 4px;
+      font-family: var(--mono);
+    }
+
+    /* ── PROJECTS ── */
+    #projects { background: var(--bg); }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .project-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem;
+      transition: border-color 0.2s, transform 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .project-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+    .project-card:hover::before { opacity: 1; }
+
+    .project-type {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      color: var(--accent);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+
+    .project-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.01em;
+    }
+
+    .project-desc {
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.75;
+      margin-bottom: 1.5rem;
+    }
+
+    .project-stack { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.5rem; }
+
+    .project-result {
+      font-size: 0.82rem;
+      color: var(--accent2);
+      font-family: var(--mono);
+      padding: 0.6rem 0.9rem;
+      background: rgba(124,92,252,0.08);
+      border-radius: 6px;
+      border-left: 2px solid var(--accent);
+    }
+
+    /* ── SERVICES ── */
+    #services { background: var(--bg2); }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .service-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem;
+      transition: border-color 0.2s;
+    }
+
+    .service-card:hover { border-color: var(--accent); }
+
+    .service-icon {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .service-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.6rem;
+    }
+
+    .service-desc { color: var(--muted); font-size: 0.88rem; line-height: 1.7; }
+
+    /* ── CONTACT ── */
+    #contact { background: var(--bg); }
+
+    .contact-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 3.5rem;
+      text-align: center;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .contact-box h3 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.02em;
+    }
+
+    .contact-box p { color: var(--muted); margin-bottom: 2.5rem; }
+
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 2rem;
+    }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-family: var(--mono);
+      padding: 0.5rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+
+    .contact-link:hover { color: var(--accent2); border-color: var(--accent); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      padding: 2rem 6vw;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    footer p { color: var(--muted); font-size: 0.82rem; font-family: var(--mono); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .hero-grid, .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .hero-stats { grid-template-columns: repeat(3, 1fr); }
+      .nav-links { display: none; }
+      .contact-box { padding: 2rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="#home">hafsah.haq</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="home">
+    <div class="blob"></div>
+    <div class="hero-grid">
+      <div>
+        <p class="hero-label">// available for freelance</p>
+        <h1 class="hero-name">Hafsah<br><span>Haq</span></h1>
+        <p class="hero-sub">
+          Web Developer · App Developer · Data Analyst.<br>
+          I build dashboards, websites, and apps that actually solve problems — not just look good.
+        </p>
+        <div class="hero-btns">
+          <a href="#projects" class="btn btn-primary">View My Work</a>
+          <a href="#contact" class="btn btn-outline">Get In Touch</a>
+        </div>
+      </div>
+      <div>
+        <div class="hero-stats">
+          <div class="stat">
+            <span class="stat-num">6+</span>
+            <span class="stat-label">Freelance Projects</span>
+          </div>
+          <div class="stat">
+            <span class="stat-num">3</span>
+            <span class="stat-label">Industries Served</span>
+          </div>
+          <div class="stat">
+            <span class="stat-num">2</span>
+            <span class="stat-label">Countries</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-inner">
+      <p class="section-label">// about me</p>
+      <h2 class="section-title">I build things that work.</h2>
+      <div class="about-grid">
+        <div class="about-text">
+          <p>I'm a <strong>Computer Science student at IBA Karachi</strong> (Batch of 2029) who builds real things for real clients — not just academic projects.</p>
+          <p>I've delivered <strong>6+ freelance data and dashboard projects</strong> across Power BI, Excel, and Google Sheets for clients in oil & gas, government, and finance. I also build websites, web apps, and mobile apps in React Native.</p>
+          <p>Currently open to freelance projects locally in Karachi and remotely worldwide.</p>
+        </div>
+        <div>
+          <div class="skills-grid">
+            <div class="skill-cat">
+              <h4>Data & Analytics</h4>
+              <div class="skill-tags">
+                <span class="tag">Power BI</span>
+                <span class="tag">Excel</span>
+                <span class="tag">Google Sheets</span>
+                <span class="tag">Apps Script</span>
+                <span class="tag">Data Viz</span>
+              </div>
+            </div>
+            <div class="skill-cat">
+              <h4>Web Dev</h4>
+              <div class="skill-tags">
+                <span class="tag">React</span>
+                <span class="tag">Python</span>
+                <span class="tag">FastAPI</span>
+                <span class="tag">WordPress</span>
+                <span class="tag">Node.js</span>
+              </div>
+            </div>
+            <div class="skill-cat">
+              <h4>Mobile</h4>
+              <div class="skill-tags">
+                <span class="tag">React Native</span>
+                <span class="tag">Expo</span>
+              </div>
+            </div>
+            <div class="skill-cat">
+              <h4>Languages</h4>
+              <div class="skill-tags">
+                <span class="tag">Python</span>
+                <span class="tag">C++</span>
+                <span class="tag">JavaScript</span>
+                <span class="tag">C</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="section-inner">
+      <p class="section-label">// selected work</p>
+      <h2 class="section-title">Things I've built.</h2>
+      <p class="section-desc">Real projects for real clients — anonymized where confidentiality applies.</p>
+      <div class="projects-grid">
+
+        <div class="project-card">
+          <p class="project-type">Power BI · Oil & Gas</p>
+          <h3 class="project-title">Executive Leadership Readiness Dashboard</h3>
+          <p class="project-desc">Multi-page Power BI dashboard for a mid-sized oil & gas company covering succession planning, high-potential employee analytics, exposure-gap analysis, and manager rotation tracking.</p>
+          <div class="project-stack">
+            <span class="tag">Power BI</span>
+            <span class="tag">DAX</span>
+            <span class="tag">Data Modeling</span>
+          </div>
+          <p class="project-result">→ Used regularly by leadership for succession reviews</p>
+        </div>
+
+        <div class="project-card">
+          <p class="project-type">Google Sheets · US Government</p>
+          <h3 class="project-title">Airport Grant Tracking System</h3>
+          <p class="project-desc">End-to-end Google Sheets + Apps Script system for a U.S. state transportation department: dashboards, automated alerts, data-entry modals, and one-click PDF report export.</p>
+          <div class="project-stack">
+            <span class="tag">Google Sheets</span>
+            <span class="tag">Apps Script</span>
+            <span class="tag">Automation</span>
+          </div>
+          <p class="project-result">→ Built from scratch, no prior codebase</p>
+        </div>
+
+        <div class="project-card">
+          <p class="project-type">Power BI · Finance</p>
+          <h3 class="project-title">Advisor Activity Dashboard</h3>
+          <p class="project-desc">Dashboard tracking financial advisor client interactions, AUM progress, and revenue targets across branches — built for internal management reporting.</p>
+          <div class="project-stack">
+            <span class="tag">Power BI</span>
+            <span class="tag">Excel</span>
+            <span class="tag">VBA</span>
+          </div>
+          <p class="project-result">→ Replaced manual weekly reporting process</p>
+        </div>
+
+        <div class="project-card">
+          <p class="project-type">Web · Solo Project</p>
+          <h3 class="project-title">Petpharma</h3>
+          <p class="project-desc">A pet care website designed and built solo from scratch — full UI, responsive layout, and complete content. Built as a personal project to demonstrate end-to-end web development capability.</p>
+          <div class="project-stack">
+            <span class="tag">HTML</span>
+            <span class="tag">CSS</span>
+            <span class="tag">JavaScript</span>
+          </div>
+          <p class="project-result">→ Designed & built end-to-end, solo</p>
+        </div>
+
+        <div class="project-card">
+          <p class="project-type">Mobile · In Progress</p>
+          <h3 class="project-title">ROAM — Nightlife Finder App</h3>
+          <p class="project-desc">A social hangout and nightlife discovery app built in React Native with a dark cinematic aesthetic. Location-based venue discovery with a focus on real-time social features.</p>
+          <div class="project-stack">
+            <span class="tag">React Native</span>
+            <span class="tag">Expo</span>
+            <span class="tag">JavaScript</span>
+          </div>
+          <p class="project-result">→ Currently in active development</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="section-inner">
+      <p class="section-label">// what I offer</p>
+      <h2 class="section-title">How I can help.</h2>
+      <p class="section-desc">Fixed-scope packages and custom projects — locally in Karachi and remotely worldwide.</p>
+      <div class="services-grid">
+        <div class="service-card">
+          <span class="service-icon">📊</span>
+          <h3 class="service-title">Dashboard Development</h3>
+          <p class="service-desc">Power BI, Excel, and Google Sheets dashboards for executive reporting, KPI tracking, and business intelligence. Built to be used by real decision-makers.</p>
+        </div>
+        <div class="service-card">
+          <span class="service-icon">⚙️</span>
+          <h3 class="service-title">Spreadsheet Automation</h3>
+          <p class="service-desc">Google Apps Script and Excel VBA systems that automate repetitive work — alerts, reports, data entry, PDF exports. No more manual copy-paste.</p>
+        </div>
+        <div class="service-card">
+          <span class="service-icon">🌐</span>
+          <h3 class="service-title">Web Development</h3>
+          <p class="service-desc">Business websites, WordPress sites, and custom web apps. Clean, mobile-responsive, and built to actually represent your business well.</p>
+        </div>
+        <div class="service-card">
+          <span class="service-icon">📱</span>
+          <h3 class="service-title">Mobile App Development</h3>
+          <p class="service-desc">Cross-platform mobile apps in React Native — one codebase, works on both iOS and Android. From idea to working app.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-inner">
+      <p class="section-label">// get in touch</p>
+      <div class="contact-box">
+        <h3>Let's work together.</h3>
+        <p>Have a project in mind? Need a dashboard, a website, or someone who'll actually debug the messy parts? Reach out.</p>
+        <a href="mailto:your@email.com" class="btn btn-primary">Send me an email</a>
+        <div class="contact-links">
+          <a href="https://linkedin.com/in/hafsah-haq-6a407237b" class="contact-link" target="_blank">↗ LinkedIn</a>
+          <a href="https://github.com/HafsaH-Haq" class="contact-link" target="_blank">↗ GitHub</a>
+          <a href="https://hafsahhaq.wordpress.com" class="contact-link" target="_blank">↗ WordPress</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 Hafsah Haq</p>
+    <p>hafsahhaq.github.io</p>
+  </footer>
+
+</body>
+</html>
